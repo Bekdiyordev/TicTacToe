@@ -2,6 +2,7 @@ package uz.beko404.tictactoe.ui
 
 import android.os.Bundle
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import uz.beko404.tictactoe.BaseFragment
 import uz.beko404.tictactoe.R
 import uz.beko404.tictactoe.databinding.FragmentHomeBinding
@@ -17,5 +18,16 @@ class Home : BaseFragment(R.layout.fragment_home) {
 
     private fun setupUI() = with(binding){
 
+        multiplayer.setOnClickListener {
+            findNavController().navigate(R.id.action_home2_to_game)
+        }
+
+        cpu.setOnClickListener {
+            findNavController().navigate(R.id.action_home2_to_game)
+        }
+
+        settings.setOnClickListener {
+            findNavController().navigate(R.id.action_home2_to_settings2)
+        }
     }
 }

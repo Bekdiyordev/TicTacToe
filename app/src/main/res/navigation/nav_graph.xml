@@ -31,5 +31,22 @@
         android:id="@+id/home2"
         android:name="uz.beko404.tictactoe.ui.Home"
         android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_home2_to_game"
+            app:destination="@id/game" />
+        <action
+            android:id="@+id/action_home2_to_settings2"
+            app:destination="@id/settings2" />
+    </fragment>
+    <fragment
+        android:id="@+id/game"
+        android:name="uz.beko404.tictactoe.ui.Game"
+        android:label="fragment_game"
+        tools:layout="@layout/fragment_game" />
+    <fragment
+        android:id="@+id/settings2"
+        android:name="uz.beko404.tictactoe.ui.Settings"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>
