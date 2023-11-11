@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">TicTacToe</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="title1">Welcome</string>
+    <string name="title2">Compete</string>
+    <string name="title3">Scoreboard</string>
+    <string name="desc1">One of the oldest world games now available on your smartphone device!</string>
+    <string name="desc2">Play the game with your friends, and prove that you’re a worthy opponent!</string>
+    <string name="desc3">Earn points and make your own way to the top of the scoreboard!</string>
 </resources>

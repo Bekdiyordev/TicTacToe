@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.OnBoarding">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="?android:actionBarSize"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:layout_height="wrap_content"
+            android:text="@string/back"
+            android:textSize="18sp"
+            android:id="@+id/back"
+            android:layout_marginHorizontal="16dp"/>
+
+        <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
+            android:layout_width="wrap_content"
+            app:dotsColor="@color/light_blue"
+            app:dotsSize="10dp"
+            android:id="@+id/indicator"
+            app:dotsStrokeWidth="1dp"
+            android:layout_height="wrap_content"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="@string/next"
+            android:textColor="@color/black"
+            android:gravity="end"
+            android:textSize="18sp"
+            android:id="@+id/next"
+            android:layout_marginHorizontal="16dp"/>
+    </LinearLayout>
+</FrameLayout>
