@@ -10,4 +10,12 @@
     <string name="desc1">One of the oldest world games now available on your smartphone device!</string>
     <string name="desc2">Play the game with your friends, and prove that you’re a worthy opponent!</string>
     <string name="desc3">Earn points and make your own way to the top of the scoreboard!</string>
+    <string name="username">Anonymous Player</string>
+    <string name="_0">0</string>
+    <string name="wins">Wins</string>
+    <string name="draws">Draws</string>
+    <string name="losses">Losses</string>
+    <string name="vs_friend">vs FRIEND</string>
+    <string name="vs_cpu">vs CPU</string>
+    <string name="settings">Settings</string>
 </resources>
