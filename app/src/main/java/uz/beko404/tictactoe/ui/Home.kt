@@ -28,49 +28,58 @@ class Home : BaseFragment(R.layout.fragment_home) {
             findNavController().navigate(R.id.action_home2_to_game)
         }
 
-        setting.setOnClickListener {
+//        setting.setOnClickListener {
 //            findNavController().navigate(R.id.action_home2_to_settings2)
-            constraintLayout.transitionToEnd()
-        }
+//            constraintLayout.transitionToEnd()
+//        }
 
-        constraintLayout.setTransitionListener(object : MotionLayout.TransitionListener {
-            override fun onTransitionStarted(
-                motionLayout: MotionLayout,
-                startId: Int,
-                endId: Int
-            ) {
-                // Transition boshlandi
-            }
-
-            override fun onTransitionChange(
-                motionLayout: MotionLayout,
-                startId: Int,
-                endId: Int,
-                progress: Float
-            ) {
-                // Transition o'zgarayapti
-            }
-
-            override fun onTransitionCompleted(
-                motionLayout: MotionLayout,
-                currentId: Int
-            ) {
-                // Agar animatsiya tugatilgan bo'lsa, animatsiyalarni o'zgartirish
-                when (currentId) {
-
-                }
-    }
-
-            override fun onTransitionTrigger(
-                motionLayout: MotionLayout?,
-                triggerId: Int,
-                positive: Boolean,
-                progress: Float
-            ) {
-                TODO("Not yet implemented")
-            }
-
-        })
+//        constraintLayout.setTransitionListener(object : MotionLayout.TransitionListener {
+//            override fun onTransitionStarted(
+//                motionLayout: MotionLayout,
+//                startId: Int,
+//                endId: Int
+//            ) {
+//                // Transition boshlandi
+//            }
+//
+//            override fun onTransitionChange(
+//                motionLayout: MotionLayout,
+//                startId: Int,
+//                endId: Int,
+//                progress: Float
+//            ) {
+//                // Transition o'zgarayapti
+//            }
+//
+//            override fun onTransitionCompleted(
+//                motionLayout: MotionLayout,
+//                currentId: Int
+//            ) {
+//                // Agar animatsiya tugatilgan bo'lsa, animatsiyalarni o'zgartirish
+//                when (currentId) {
+//                    R.id.end -> {
+//                        constraintLayout.transitionToState(R.id.history)
+//                    }
+//
+//                    R.id.history -> constraintLayout.transitionToState(R.id.profile)
+//
+//                    R.id.profile -> constraintLayout.transitionToState(R.id.theme)
+//
+//                    R.id.theme -> constraintLayout.transitionToState(R.id.rate)
+//
+//                }
+//    }
+//
+//            override fun onTransitionTrigger(
+//                motionLayout: MotionLayout?,
+//                triggerId: Int,
+//                positive: Boolean,
+//                progress: Float
+//            ) {
+//                TODO("Not yet implemented")
+//            }
+//
+//        })
 
     }
 }

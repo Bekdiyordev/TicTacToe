@@ -4,26 +4,30 @@
     xmlns:app="urn:oasis:names:tc:xliff:document:1.2">
 
     <Transition
-        motion:constraintSetEnd1="@+id/email"
-        motion:constraintSetEnd2="@+id/history"
-        motion:constraintSetEnd3="@+id/profile"
-        motion:constraintSetEnd4="@+id/theme"
-        motion:constraintSetEnd5="@+id/rate"
+        motion:constraintSetEnd="@+id/end"
         motion:constraintSetStart="@id/start"
-        motion:duration="1000">
+        motion:duration="600">
        <KeyFrameSet>
        </KeyFrameSet>
-<!--        <OnClick-->
-<!--            motion:targetId="@+id/setting"-->
-<!--            motion:clickAction="toggle"/>-->
+        <OnClick
+            motion:targetId="@+id/setting"
+            motion:clickAction="toggle"/>
 
     </Transition>
 
     <ConstraintSet android:id="@+id/start">
-
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_setting" />
     </ConstraintSet>
 
-    <ConstraintSet android:id="@+id/email">
+    <ConstraintSet android:id="@+id/end">
         <Constraint
             android:id="@+id/email"
             android:layout_width="wrap_content"
@@ -32,9 +36,7 @@
             motion:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginEnd="40dp"
             android:layout_marginBottom="20dp"/>
-    </ConstraintSet>
 
-    <ConstraintSet android:id="@id/history">
         <Constraint
             android:id="@+id/history"
             android:layout_width="wrap_content"
@@ -43,9 +45,7 @@
             motion:layout_constraintStart_toStartOf="@id/email"
             motion:layout_constraintBottom_toTopOf="@id/email"
             motion:layout_constraintEnd_toStartOf="@id/profile" />
-    </ConstraintSet>
 
-    <ConstraintSet android:id="@id/profile">
         <Constraint
             android:id="@+id/profile"
             android:layout_width="wrap_content"
@@ -54,9 +54,7 @@
             motion:layout_constraintEnd_toEndOf="parent"
             motion:layout_constraintBottom_toTopOf="@id/setting"
             android:layout_marginBottom="40dp"/>
-    </ConstraintSet>
 
-    <ConstraintSet android:id="@id/theme">
         <Constraint
             android:id="@+id/theme"
             android:layout_width="wrap_content"
@@ -65,9 +63,7 @@
             motion:layout_constraintEnd_toEndOf="@id/rate"
             motion:layout_constraintTop_toTopOf="@id/profile"
             motion:layout_constraintBottom_toTopOf="@id/rate" />
-    </ConstraintSet>
 
-    <ConstraintSet android:id="@id/rate">
         <Constraint
             android:id="@+id/rate"
             android:layout_width="wrap_content"
