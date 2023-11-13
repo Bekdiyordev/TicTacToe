@@ -173,24 +173,5 @@
             app:iconSize="48dp"
             app:iconTint="@color/white" />
 
-        <com.google.android.material.button.MaterialButton
-            app:rippleColor="@color/blue"
-            android:id="@+id/settings"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
-            android:layout_marginTop="32dp"
-            android:background="@drawable/button_style"
-            android:gravity="start|center_vertical"
-            android:insetTop="0dp"
-            android:insetBottom="0dp"
-            android:paddingVertical="20dp"
-            android:text="@string/settings"
-            android:textSize="24sp"
-            app:backgroundTint="@null"
-            app:icon="@drawable/ic_settings"
-            app:iconPadding="20dp"
-            app:iconSize="48dp"
-            app:iconTint="@color/white" />
     </LinearLayout>
 </RelativeLayout>

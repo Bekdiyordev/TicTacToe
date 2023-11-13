@@ -7,7 +7,7 @@ import uz.beko404.tictactoe.R
 import uz.beko404.tictactoe.databinding.FragmentSettingsBinding
 import uz.beko404.tictactoe.utils.viewBinding
 
-class Settings : BaseFragment(R.layout.fragment_settings) {
+class History : BaseFragment(R.layout.fragment_settings) {
     private val binding by viewBinding { FragmentSettingsBinding.bind(it) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

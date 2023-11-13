@@ -1,0 +1,35 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="50dp"
+    android:height="50dp"
+    android:viewportWidth="50"
+    android:viewportHeight="50">
+  <path
+      android:pathData="M25,0L25,0A25,25 0,0 1,50 25L50,25A25,25 0,0 1,25 50L25,50A25,25 0,0 1,0 25L0,25A25,25 0,0 1,25 0z">
+    <aapt:attr name="android:fillColor">
+      <gradient 
+          android:startX="0"
+          android:startY="25"
+          android:endX="51.5"
+          android:endY="25"
+          android:type="linear">
+        <item android:offset="0" android:color="#FF007AFF"/>
+        <item android:offset="1" android:color="#FF3797FF"/>
+      </gradient>
+    </aapt:attr>
+  </path>
+  <path
+      android:strokeWidth="1"
+      android:pathData="M25,28C26.657,28 28,26.657 28,25C28,23.343 26.657,22 25,22C23.343,22 22,23.343 22,25C22,26.657 23.343,28 25,28Z"
+      android:strokeLineJoin="round"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+  <path
+      android:strokeWidth="1"
+      android:pathData="M15,25.88V24.12C15,23.08 15.85,22.22 16.9,22.22C18.71,22.22 19.45,20.94 18.54,19.37C18.02,18.47 18.33,17.3 19.24,16.78L20.97,15.79C21.76,15.32 22.78,15.6 23.25,16.39L23.36,16.58C24.26,18.15 25.74,18.15 26.65,16.58L26.76,16.39C27.23,15.6 28.25,15.32 29.04,15.79L30.77,16.78C31.68,17.3 31.99,18.47 31.47,19.37C30.56,20.94 31.3,22.22 33.11,22.22C34.15,22.22 35.01,23.07 35.01,24.12V25.88C35.01,26.92 34.16,27.78 33.11,27.78C31.3,27.78 30.56,29.06 31.47,30.63C31.99,31.54 31.68,32.7 30.77,33.22L29.04,34.21C28.25,34.68 27.23,34.4 26.76,33.61L26.65,33.42C25.75,31.85 24.27,31.85 23.36,33.42L23.25,33.61C22.78,34.4 21.76,34.68 20.97,34.21L19.24,33.22C18.33,32.7 18.02,31.53 18.54,30.63C19.45,29.06 18.71,27.78 16.9,27.78C15.85,27.78 15,26.92 15,25.88Z"
+      android:strokeLineJoin="round"
+      android:fillColor="#00000000"
+      android:strokeColor="#ffffff"
+      android:strokeLineCap="round"/>
+</vector>
