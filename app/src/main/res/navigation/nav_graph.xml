@@ -48,5 +48,5 @@
         android:id="@+id/settings2"
         android:name="uz.beko404.tictactoe.ui.History"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_history" />
 </navigation>
