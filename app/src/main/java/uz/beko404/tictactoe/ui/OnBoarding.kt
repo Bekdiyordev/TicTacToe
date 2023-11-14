@@ -9,6 +9,7 @@ import uz.beko404.tictactoe.R
 import uz.beko404.tictactoe.adapters.OnBoardingAdapter
 import uz.beko404.tictactoe.databinding.FragmentOnBoardingBinding
 import uz.beko404.tictactoe.models.OnBoarding
+import uz.beko404.tictactoe.utils.SharedPref
 import uz.beko404.tictactoe.utils.viewBinding
 
 
@@ -37,13 +38,13 @@ class OnBoarding : BaseFragment(R.layout.fragment_on_boarding) {
         next.setOnClickListener {
             nextPage()
         }
-
     }
 
     private fun nextPage() = with(binding) {
         back.isEnabled = true
         if (viewPager.currentItem == 2) {
-            findNavController().navigate(R.id.action_onBoarding_to_home2)
+            SharedPref(requireContext()).isEntered = true
+            findNavController().navigate(R.id.action_onBoarding_to_home)
         } else {
             viewPager.currentItem++
         }

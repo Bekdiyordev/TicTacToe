@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uz.beko404.tictactoe.BaseFragment
 import uz.beko404.tictactoe.R
+import uz.beko404.tictactoe.utils.SharedPref
 
 class Splash : BaseFragment(R.layout.fragment_splash) {
 
@@ -21,7 +22,10 @@ class Splash : BaseFragment(R.layout.fragment_splash) {
         lifecycleScope.launch {
             delay(1000)
             withContext(Dispatchers.Main) {
-                findNavController().navigate(R.id.action_splash_to_onBoarding)
+                if (SharedPref(requireContext()).isEntered)
+                    findNavController().navigate(R.id.action_splash_to_home)
+                else
+                    findNavController().navigate(R.id.action_splash_to_onBoarding)
             }
         }
     }
