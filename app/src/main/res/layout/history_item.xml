@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp">
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player 1"
+        android:id="@+id/player_1"
+        app:drawableLeftCompat="@drawable/ic_multiplayer_mini"
+        android:textSize="18sp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:textColor="@color/green"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:fontFamily="@font/montserrat_regular"
+        android:textSize="18sp"
+        android:text="1 : 0"
+        android:id="@+id/result"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/player_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player 1"
+        app:drawableRightCompat="@drawable/ic_cpu_mini"
+        android:textSize="18sp"
+        android:drawablePadding="10dp"
+        android:fontFamily="@font/montserrat_regular"
+        android:textColor="@color/red"/>
+</LinearLayout>
