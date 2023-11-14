@@ -22,4 +22,6 @@
     <string name="player_title">Enter your username</string>
     <string name="opponent_title">Enter opponent username</string>
     <string name="save">Save</string>
+    <string name="turn">Your turn</string>
+    <string name="winner"> is WINNER</string>
 </resources>
