@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.doAfterTextChanged
@@ -105,6 +104,7 @@ class Home : BaseFragment(R.layout.fragment_home) {
         }
         b.show()
     }
+
     private fun changeTheme() {
         if (sharedPref.nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
@@ -114,6 +114,7 @@ class Home : BaseFragment(R.layout.fragment_home) {
             sharedPref.nightMode = true
         }
     }
+
     private fun openRateWindow() {
         val uri: Uri = Uri.parse("market://details?id=${activity?.packageName}")
         val goToMarket = Intent(Intent.ACTION_VIEW, uri)
