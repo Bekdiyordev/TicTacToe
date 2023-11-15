@@ -203,7 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
-                android:background="@color/red" />
+                android:background="@color/black" />
         </FrameLayout>
 
         <FrameLayout
@@ -217,7 +217,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
-                android:background="@color/red" />
+                android:background="@color/black" />
         </FrameLayout>
 
         <FrameLayout
@@ -231,7 +231,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="5dp"
                 android:layout_gravity="center"
-                android:background="@color/red" />
+                android:background="@color/black" />
         </FrameLayout>
     </LinearLayout>
 
@@ -271,17 +271,4 @@
             android:textColor="@color/red"
             android:id="@+id/opponent_name"/>
     </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/result"
-        android:visibility="gone"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="DRAW"
-        android:textSize="36sp"
-        android:textColor="@color/white"
-        android:fontFamily="@font/montserrat_medium"
-        android:gravity="center"
-        android:background="#9F000000"/>
-
 </RelativeLayout>

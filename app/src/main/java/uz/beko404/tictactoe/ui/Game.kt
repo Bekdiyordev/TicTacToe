@@ -1,10 +1,12 @@
 package uz.beko404.tictactoe.ui
 
 import android.app.AlertDialog
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.size
@@ -12,6 +14,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -73,6 +76,7 @@ class Game : BaseFragment(R.layout.fragment_game) {
     private fun itemClick(view: View) {
         val tag = view.tag.toString()
         if (checkPlace(tag = tag)) {
+            clearFocus()
             if (isPlayerTurn) {
                 (view as ShapeableImageView).setImageResource(R.drawable.ic_x)
                 board[tag.substring(0, 1).toInt()][tag.substring(1).toInt()] = 1
@@ -91,9 +95,33 @@ class Game : BaseFragment(R.layout.fragment_game) {
             Toast.makeText(requireContext(), "This place is busy", Toast.LENGTH_SHORT).show()
     }
 
+    private fun clearFocus() = with(binding) {
+        p11.isClickable = false
+        p12.isClickable = false
+        p13.isClickable = false
+        p21.isClickable = false
+        p22.isClickable = false
+        p23.isClickable = false
+        p31.isClickable = false
+        p32.isClickable = false
+        p33.isClickable = false
+    }
+
+    private fun setFocus() = with(binding) {
+        p11.isClickable = true
+        p12.isClickable = true
+        p13.isClickable = true
+        p21.isClickable = true
+        p22.isClickable = true
+        p23.isClickable = true
+        p31.isClickable = true
+        p32.isClickable = true
+        p33.isClickable = true
+    }
+
     private fun checkGameFinished() {
         if (isDraw())
-            binding.result.visibility = View.VISIBLE
+            showResult(0)
         else {
             if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] != 0) findWinner(
                 1
@@ -119,8 +147,8 @@ class Game : BaseFragment(R.layout.fragment_game) {
             if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != 0) findWinner(
                 8
             )
+            else setFocus()
         }
-
     }
 
     private fun isDraw(): Boolean {
@@ -156,7 +184,7 @@ class Game : BaseFragment(R.layout.fragment_game) {
                 showResult(board[0][0])
                 binding.winLine.visibility = View.VISIBLE
                 binding.winLine.rotation = -90f
-                binding.line2.visibility = View.VISIBLE
+                binding.line1.visibility = View.VISIBLE
             }
 
             5 -> {
@@ -190,33 +218,47 @@ class Game : BaseFragment(R.layout.fragment_game) {
         }
     }
 
-    private fun showDialog(winnerName: String) {
+    private fun showDialog(type: Int) {
         val dialogBuilder = AlertDialog.Builder(requireContext())
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_result, null)
         dialogBuilder.setView(dialogView)
         val b = dialogBuilder.create()
         b.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val icon = dialogView.findViewById<ImageView>(R.id.winner_image)
+        val text = dialogView.findViewById<TextView>(R.id.winner_name)
+        val reset = dialogView.findViewById<ImageView>(R.id.reset)
+        val exit = dialogView.findViewById<ImageView>(R.id.exit)
 
-        dialogView.findViewById<TextView>(R.id.winner_name).text = winnerName
+        when (type) {
+            0 -> {
+                text.text = getString(R.string.draw)
+                icon.setImageResource(R.drawable.ic_draw)
+            }
 
-        val usernameView = dialogView.findViewById<TextView>(R.id.username)
-        usernameView.text = username
-        val button = dialogView.findViewById<MaterialButton>(R.id.save)
-        button.isEnabled = !usernameView.text.isNullOrEmpty()
+            1 -> {
+                text.text = sharedPref.username.plus(" ").plus(getString(R.string.winner))
+                icon.setImageResource(R.drawable.ic_x)
+                text.setTextColor(Color.parseColor("#208AFF"))
+                reset.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#208AFF"))
+                exit.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#208AFF"))
+            }
 
-        usernameView.doAfterTextChanged {
-            button.isEnabled = !it.isNullOrEmpty()
+            2 -> {
+                text.text = sharedPref.opponent.plus(" ").plus(getString(R.string.winner))
+                icon.setImageResource(R.drawable.ic_o)
+                text.setTextColor(Color.parseColor("#FF0000"))
+                reset.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF0000"))
+                exit.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF0000"))
+            }
         }
 
-        button.setOnClickListener {
-            if (state) {
-                sharedPref.username = usernameView.text.toString()
-                binding.playerName.text = sharedPref.username
-            } else {
-                sharedPref.opponent = usernameView.text.toString()
-                findNavController().navigate(R.id.action_home_to_game)
-            }
+        reset.setOnClickListener {
+            resetGame()
+            b.dismiss()
+        }
+        exit.setOnClickListener {
+            findNavController().navigateUp()
             b.dismiss()
         }
         b.show()
@@ -226,21 +268,21 @@ class Game : BaseFragment(R.layout.fragment_game) {
         if (type == 1) {
             playerScoreCount++
             playerScore.text = playerScoreCount.toString()
-        } else {
+        }
+        else if (type == 2) {
             opponentScoreCount++
             opponentScore.text = opponentScoreCount.toString()
         }
 
-        lifecycleScope.launch {
-            delay(1000)
-            withContext(Dispatchers.Main) {
-                if (type == 1)
-                    showDialog(sharedPref.username)
-                else
-                    showDialog(sharedPref.opponent)
+        if (type == 0)
+            showDialog(type)
+        else
+            lifecycleScope.launch {
+                delay(1000)
+                withContext(Dispatchers.Main) {
+                    showDialog(type)
+                }
             }
-        }
-
     }
 
     private fun checkPlace(tag: String): Boolean {
@@ -248,6 +290,8 @@ class Game : BaseFragment(R.layout.fragment_game) {
     }
 
     private fun resetGame() = with(binding) {
+        clearBoard()
+        setFocus()
         p11.setImageResource(R.drawable.placeholder)
         p12.setImageResource(R.drawable.placeholder)
         p13.setImageResource(R.drawable.placeholder)
@@ -260,7 +304,15 @@ class Game : BaseFragment(R.layout.fragment_game) {
         line1.visibility = View.INVISIBLE
         line2.visibility = View.INVISIBLE
         line3.visibility = View.INVISIBLE
+        winLine.rotation = 0f
         winLine.visibility = View.GONE
+        board.isFocusable = false
+    }
 
+    private fun clearBoard() {
+        for (i in 0 until 3) {
+            for (j in 0 until 3)
+                board[i][j] = 0
+        }
     }
 }
