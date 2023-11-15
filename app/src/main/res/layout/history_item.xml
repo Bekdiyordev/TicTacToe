@@ -15,7 +15,8 @@
         android:textSize="18sp"
         android:drawablePadding="10dp"
         android:fontFamily="@font/montserrat_regular"
-        android:textColor="@color/green"/>
+        android:textColor="@color/green"
+        app:drawableTint="@color/black"/>
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="0dp"
@@ -29,6 +30,7 @@
         android:id="@+id/result"/>
 
     <com.google.android.material.textview.MaterialTextView
+        app:drawableTint="@color/black"
         android:id="@+id/player_2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

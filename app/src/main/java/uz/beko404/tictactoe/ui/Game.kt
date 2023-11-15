@@ -223,6 +223,7 @@ class Game : BaseFragment(R.layout.fragment_game) {
         val inflater = this.layoutInflater
         val dialogView = inflater.inflate(R.layout.dialog_result, null)
         dialogBuilder.setView(dialogView)
+        dialogBuilder.setCancelable(false)
         val b = dialogBuilder.create()
         b.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         val icon = dialogView.findViewById<ImageView>(R.id.winner_image)
@@ -239,17 +240,17 @@ class Game : BaseFragment(R.layout.fragment_game) {
             1 -> {
                 text.text = sharedPref.username.plus(" ").plus(getString(R.string.winner))
                 icon.setImageResource(R.drawable.ic_x)
-                text.setTextColor(Color.parseColor("#208AFF"))
-                reset.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#208AFF"))
-                exit.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#208AFF"))
+                text.setTextColor(Color.parseColor("#Bf208AFF"))
+                reset.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#Bf208AFF"))
+                exit.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#Bf208AFF"))
             }
 
             2 -> {
                 text.text = sharedPref.opponent.plus(" ").plus(getString(R.string.winner))
                 icon.setImageResource(R.drawable.ic_o)
-                text.setTextColor(Color.parseColor("#FF0000"))
-                reset.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF0000"))
-                exit.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#FF0000"))
+                text.setTextColor(Color.parseColor("#BfF83E3E"))
+                reset.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#BfF83E3E"))
+                exit.backgroundTintList = ColorStateList.valueOf(Color.parseColor("#BfF83E3E"))
             }
         }
 

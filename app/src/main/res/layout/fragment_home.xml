@@ -147,12 +147,13 @@
             android:insetBottom="0dp"
             android:paddingVertical="20dp"
             android:text="@string/vs_friend"
+            android:textColor="@color/white_only"
             android:textSize="24sp"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_multiplayer"
             app:iconPadding="20dp"
             app:iconSize="48dp"
-            app:iconTint="@color/white" />
+            app:iconTint="@color/white_only" />
 
         <com.google.android.material.button.MaterialButton
             app:rippleColor="@color/dark_blue"
@@ -165,6 +166,7 @@
             android:gravity="start|center_vertical"
             android:insetTop="0dp"
             android:insetBottom="0dp"
+            android:textColor="@color/white_only"
             android:paddingVertical="20dp"
             android:text="@string/vs_cpu"
             android:textSize="24sp"
@@ -172,7 +174,7 @@
             app:icon="@drawable/ic_cpu"
             app:iconPadding="20dp"
             app:iconSize="48dp"
-            app:iconTint="@color/white" />
+            app:iconTint="@color/white_only" />
     </LinearLayout>
 
     <androidx.constraintlayout.motion.widget.MotionLayout

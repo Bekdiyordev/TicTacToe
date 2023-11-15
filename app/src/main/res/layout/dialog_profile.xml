@@ -27,12 +27,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username_title"
-            app:boxStrokeColor="@color/blue"
             app:startIconDrawable="@drawable/ic_user">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/username"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
@@ -41,6 +41,7 @@
             app:backgroundTint="@null"
             android:background="@drawable/button_style"
             android:text="@string/save"
+            android:textColor="@color/white_only"
             android:textSize="18sp"
             android:id="@+id/save"
             android:fontFamily="@font/montserrat_regular"/>
