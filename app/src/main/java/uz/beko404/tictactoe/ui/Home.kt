@@ -28,7 +28,7 @@ class Home : BaseFragment(R.layout.fragment_home) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this)[HistoryViewModel::class.java]
+
         sharedPref = SharedPref(requireContext())
         setupUI()
         observeData()
@@ -133,6 +133,12 @@ class Home : BaseFragment(R.layout.fragment_home) {
                 )
             )
         }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this)[HistoryViewModel::class.java]
+        viewModel.getData()
     }
 
 }
