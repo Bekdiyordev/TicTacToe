@@ -12,22 +12,33 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.button.MaterialButton
 import uz.beko404.tictactoe.BaseFragment
 import uz.beko404.tictactoe.R
 import uz.beko404.tictactoe.databinding.FragmentHomeBinding
+import uz.beko404.tictactoe.db.HistoryViewModel
 import uz.beko404.tictactoe.utils.SharedPref
 import uz.beko404.tictactoe.utils.viewBinding
 
 class Home : BaseFragment(R.layout.fragment_home) {
     private val binding by viewBinding { FragmentHomeBinding.bind(it) }
     private lateinit var sharedPref: SharedPref
+    private lateinit var viewModel: HistoryViewModel
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        viewModel = ViewModelProvider(this)[HistoryViewModel::class.java]
         sharedPref = SharedPref(requireContext())
         setupUI()
+        observeData()
+    }
+
+    private fun observeData() {
+        viewModel.allHistory.observe(viewLifecycleOwner) { historyList ->
+
+        }
     }
 
     private fun setupUI() = with(binding) {
