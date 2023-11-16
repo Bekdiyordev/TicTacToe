@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import com.google.android.material.textview.MaterialTextView
 import uz.beko404.tictactoe.R
 
-class HistoryItem  @JvmOverloads constructor(
+class HistoryItemView  @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

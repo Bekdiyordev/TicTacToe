@@ -17,7 +17,11 @@ import com.google.android.material.button.MaterialButton
 import uz.beko404.tictactoe.BaseFragment
 import uz.beko404.tictactoe.R
 import uz.beko404.tictactoe.databinding.FragmentHomeBinding
+import uz.beko404.tictactoe.db.AppDatabase
+import uz.beko404.tictactoe.db.HistoryDao
+import uz.beko404.tictactoe.db.HistoryRepository
 import uz.beko404.tictactoe.db.HistoryViewModel
+import uz.beko404.tictactoe.db.HistoryViewModelFactory
 import uz.beko404.tictactoe.utils.SharedPref
 import uz.beko404.tictactoe.utils.viewBinding
 
@@ -35,7 +39,7 @@ class Home : BaseFragment(R.layout.fragment_home) {
     }
 
     private fun observeData() {
-        viewModel.allHistory.observe(viewLifecycleOwner) { historyList ->
+        viewModel.allHistoryItem.observe(viewLifecycleOwner) { historyList ->
 
         }
     }
@@ -137,8 +141,9 @@ class Home : BaseFragment(R.layout.fragment_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProvider(this)[HistoryViewModel::class.java]
+        val historyDao = AppDatabase.getDatabase(requireContext()).getHistoryDao()
+        val repository = HistoryRepository(historyDao)
+        viewModel = ViewModelProvider(this, HistoryViewModelFactory(repository))[HistoryViewModel::class.java]
         viewModel.getData()
     }
-
 }

@@ -1,5 +1,6 @@
 package uz.beko404.tictactoe.ui
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -9,12 +10,9 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.view.size
-import androidx.core.widget.doAfterTextChanged
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.card.MaterialCardView
 import com.google.android.material.imageview.ShapeableImageView
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -22,9 +20,16 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uz.beko404.tictactoe.BaseFragment
 import uz.beko404.tictactoe.R
+import uz.beko404.tictactoe.models.HistoryItem
 import uz.beko404.tictactoe.databinding.FragmentGameBinding
+import uz.beko404.tictactoe.db.AppDatabase
+import uz.beko404.tictactoe.db.HistoryRepository
+import uz.beko404.tictactoe.db.HistoryViewModel
+import uz.beko404.tictactoe.db.HistoryViewModelFactory
 import uz.beko404.tictactoe.utils.SharedPref
 import uz.beko404.tictactoe.utils.viewBinding
+import java.text.SimpleDateFormat
+import java.util.Date
 
 class Game : BaseFragment(R.layout.fragment_game) {
     private lateinit var sharedPref: SharedPref
@@ -33,9 +38,14 @@ class Game : BaseFragment(R.layout.fragment_game) {
     private var isPlayerTurn = true
     private var playerScoreCount = 0
     private var opponentScoreCount = 0
+    private lateinit var viewModel: HistoryViewModel
+    private var hasHistory = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val historyDao = AppDatabase.getDatabase(requireContext()).getHistoryDao()
+        val repository = HistoryRepository(historyDao)
+        viewModel = ViewModelProvider(this, HistoryViewModelFactory(repository))[HistoryViewModel::class.java]
         sharedPref = SharedPref(requireContext())
         setupUI()
     }
@@ -259,18 +269,38 @@ class Game : BaseFragment(R.layout.fragment_game) {
             b.dismiss()
         }
         exit.setOnClickListener {
+            saveHistory()
             findNavController().navigateUp()
             b.dismiss()
         }
         b.show()
     }
 
+    private fun saveHistory() {
+        viewModel.insert(
+            HistoryItem(
+                playerName = sharedPref.username,
+                opponentName = sharedPref.opponent,
+                result = "$playerScoreCount : $opponentScoreCount",
+                date = getCurrentDate()
+            )
+        )
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (hasHistory)
+            saveHistory()
+    }
+
+
+
     private fun showResult(type: Int) = with(binding) {
+        hasHistory = true
         if (type == 1) {
             playerScoreCount++
             playerScore.text = playerScoreCount.toString()
-        }
-        else if (type == 2) {
+        } else if (type == 2) {
             opponentScoreCount++
             opponentScore.text = opponentScoreCount.toString()
         }
@@ -315,5 +345,11 @@ class Game : BaseFragment(R.layout.fragment_game) {
             for (j in 0 until 3)
                 board[i][j] = 0
         }
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    fun getCurrentDate(): String {
+        val sdf = SimpleDateFormat("yyyy-MM-dd")
+        return sdf.format(Date())
     }
 }

@@ -4,25 +4,23 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import uz.beko404.tictactoe.databinding.HistoryCardItemBinding
-import uz.beko404.tictactoe.models.History
-import uz.beko404.tictactoe.utils.HistoryItem
+import uz.beko404.tictactoe.models.HistoryItem
+import uz.beko404.tictactoe.utils.HistoryItemView
 
 class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     private val dif = AsyncListDiffer(this, ITEM_DIFF)
-    var position = 0
 
     @SuppressLint("SuspiciousIndentation")
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = HistoryCardItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return ViewHolder(binding, parent.context, parent)
+        return ViewHolder(binding, parent.context)
     }
 
     override fun getItemCount(): Int = dif.currentList.size
@@ -31,43 +29,40 @@ class HistoryAdapter: RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
 
     inner class ViewHolder(
         private val binding: HistoryCardItemBinding,
-        val context: Context,
-        val parent: ViewGroup
+        val context: Context
     ) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n", "NotifyDataSetChanged")
         fun setContent(position: Int) {
+            val data = dif.currentList[position]
             binding.apply {
-                for (i in 0 until 4) {
-                    val myCustomItemView = HistoryItem(context)
-                    myCustomItemView.setData("Player $i", "1 : 0", "Player $i")
+                date.text = data[0].date
+                for (item in data) {
+                    val myCustomItemView = HistoryItemView(context)
+                    myCustomItemView.setData(item.playerName, item.result, item.opponentName)
                     linear.addView(myCustomItemView)
-                    if (i != 3) {
+                    if (item != data.last()) {
                         val line = LinearLayout(context)
                         val params = LinearLayout.LayoutParams(
-                            LinearLayout.LayoutParams.MATCH_PARENT,
-                            1)
-//                        params.weight = 1f //
-//                        params.height = 0.5.toInt()
+                            LinearLayout.LayoutParams.MATCH_PARENT, 1)
                         line.layoutParams = params
                         line.setBackgroundColor(Color.parseColor("#E1E1E1"))
                         linear.addView(line)
                     }
                 }
-
             }
         }
     }
 
-    fun submitList(history: List<History>) = dif.submitList(history)
+    fun submitList(historyItem: List<List<HistoryItem>>) = dif.submitList(historyItem)
 
     companion object {
-        private val ITEM_DIFF = object : DiffUtil.ItemCallback<History>() {
-            override fun areItemsTheSame(oldItem: History, newItem: History): Boolean =
-                oldItem.date == newItem.date
+        private val ITEM_DIFF = object : DiffUtil.ItemCallback<List<HistoryItem>>() {
+            override fun areItemsTheSame(oldItem: List<HistoryItem>, newItem: List<HistoryItem>): Boolean =
+                oldItem[0].date == newItem[0].date
 
             @SuppressLint("DiffUtilEquals")
-            override fun areContentsTheSame(oldItem: History, newItem: History): Boolean =
+            override fun areContentsTheSame(oldItem: List<HistoryItem>, newItem: List<HistoryItem>): Boolean =
                 oldItem == newItem
         }
     }
