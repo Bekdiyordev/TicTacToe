@@ -41,11 +41,17 @@ class Game : BaseFragment(R.layout.fragment_game) {
     private lateinit var viewModel: HistoryViewModel
     private var hasHistory = false
 
+    private var difficultyLevel: Int = 2
+    private val cpuSymbol = R.drawable.ic_o
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val historyDao = AppDatabase.getDatabase(requireContext()).getHistoryDao()
         val repository = HistoryRepository(historyDao)
-        viewModel = ViewModelProvider(this, HistoryViewModelFactory(repository))[HistoryViewModel::class.java]
+        viewModel = ViewModelProvider(
+            this,
+            HistoryViewModelFactory(repository)
+        )[HistoryViewModel::class.java]
         sharedPref = SharedPref(requireContext())
         setupUI()
     }
@@ -92,14 +98,16 @@ class Game : BaseFragment(R.layout.fragment_game) {
                 board[tag.substring(0, 1).toInt()][tag.substring(1).toInt()] = 1
                 binding.playerTurn.visibility = View.INVISIBLE
                 binding.opponetTurn.visibility = View.VISIBLE
+                isPlayerTurn = false
             } else {
                 (view as ShapeableImageView).setImageResource(R.drawable.ic_o)
                 board[tag.substring(0, 1).toInt()][tag.substring(1).toInt()] = 2
                 binding.playerTurn.visibility = View.VISIBLE
                 binding.opponetTurn.visibility = View.INVISIBLE
+                isPlayerTurn = true
             }
 
-            isPlayerTurn = !isPlayerTurn
+
             checkGameFinished()
         } else
             Toast.makeText(requireContext(), "This place is busy", Toast.LENGTH_SHORT).show()
@@ -127,12 +135,12 @@ class Game : BaseFragment(R.layout.fragment_game) {
         p31.isClickable = true
         p32.isClickable = true
         p33.isClickable = true
+        if (sharedPref.withCPU && !isPlayerTurn) {
+            playCPUMove()
+        }
     }
 
     private fun checkGameFinished() {
-        if (isDraw())
-            showResult(0)
-        else {
             if (board[0][0] == board[0][1] && board[0][1] == board[0][2] && board[0][0] != 0) findWinner(
                 1
             )
@@ -157,7 +165,10 @@ class Game : BaseFragment(R.layout.fragment_game) {
             if (board[0][2] == board[1][1] && board[1][1] == board[2][0] && board[0][2] != 0) findWinner(
                 8
             )
-            else setFocus()
+            else {
+                if (isDraw())
+                    showResult(0)
+                setFocus()
         }
     }
 
@@ -265,7 +276,10 @@ class Game : BaseFragment(R.layout.fragment_game) {
         }
 
         reset.setOnClickListener {
-            resetGame()
+            if (sharedPref.withCPU)
+                resetGameForCPU()
+            else
+                resetGame()
             b.dismiss()
         }
         exit.setOnClickListener {
@@ -292,8 +306,6 @@ class Game : BaseFragment(R.layout.fragment_game) {
         if (hasHistory)
             saveHistory()
     }
-
-
 
     private fun showResult(type: Int) = with(binding) {
         hasHistory = true
@@ -351,5 +363,172 @@ class Game : BaseFragment(R.layout.fragment_game) {
     fun getCurrentDate(): String {
         val sdf = SimpleDateFormat("yyyy-MM-dd")
         return sdf.format(Date())
+    }
+
+    private fun playCPUMove() {
+        when (difficultyLevel) {
+            1 -> playEasyCPUMove()
+            2 -> playMediumCPUMove()
+            3 -> playHardCPUMove()
+            // Add more levels if needed
+        }
+    }
+
+    private fun playEasyCPUMove() {
+        // Oddiy algoritm (masalan, random joylash)
+        val emptyCells = mutableListOf<Pair<Int, Int>>()
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                if (board[i][j] == 0) {
+                    emptyCells.add(Pair(i, j))
+                }
+            }
+        }
+        if (emptyCells.isNotEmpty()) {
+            val randomIndex = (0 until emptyCells.size).random()
+            val (i, j) = emptyCells[randomIndex]
+            updateBoardForCPUMove(i, j)
+        }
+    }
+
+    private fun playMediumCPUMove() {
+        // O'rta darajali algoritm
+        val playerSymbol = R.drawable.ic_x
+        val cpuSymbol = R.drawable.ic_o
+
+        // Qo'yingan joy qo'yishni tekshirish
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                if (board[i][j] == 0) {
+                    // Check for a winning move for CPU
+                    board[i][j] = 2
+                    if (checkWinningMove()) {
+                        updateBoardForCPUMove(i, j)
+                        return
+                    }
+                    board[i][j] = 0
+                }
+            }
+        }
+
+        // Muqobil qo'yingan joyni blok qilish
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                if (board[i][j] == 0) {
+                    // Check for a blocking move for the opponent
+                    board[i][j] = 1
+                    if (checkWinningMove()) {
+                        updateBoardForCPUMove(i, j)
+                        return
+                    }
+                    board[i][j] = 0
+                }
+            }
+        }
+
+        // Agar qo'yingan joy bo'lsangiz, random joylash
+        playEasyCPUMove()
+    }
+
+
+    private fun playHardCPUMove() {
+        // Expert darajali algoritm
+        val playerSymbol = R.drawable.ic_x
+        val cpuSymbol = R.drawable.ic_o
+
+        // Qo'yingan joy qo'yishni tekshirish
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                if (board[i][j] == 0) {
+                    // Check for a winning move for CPU
+                    board[i][j] = 2
+                    if (checkWinningMove()) {
+                        updateBoardForCPUMove(i, j)
+                        return
+                    }
+                    board[i][j] = 0
+                }
+            }
+        }
+
+        // Muqobil qo'yingan joyni blok qilish
+        for (i in 0 until 3) {
+            for (j in 0 until 3) {
+                if (board[i][j] == 0) {
+                    // Check for a blocking move for the opponent
+                    board[i][j] = 1
+                    if (checkWinningMove()) {
+                        updateBoardForCPUMove(i, j)
+                        return
+                    }
+                    board[i][j] = 0
+                }
+            }
+        }
+
+        // Agar barcha joylar qo'yingan bo'lsa, random joylash
+        playEasyCPUMove()
+    }
+
+    private fun checkWinningMove(): Boolean {
+        // Check if CPU or the opponent has a winning move
+        for (i in 0 until 3) {
+            // Check rows
+            if (board[i][0] == board[i][1] && board[i][0] == board[i][2]) {
+                return true
+            }
+            // Check columns
+            if (board[0][i] == board[1][i] && board[0][i] == board[2][i]) {
+                return true
+            }
+        }
+        // Check diagonals
+        if (board[0][0] == board[1][1] && board[0][0] == board[2][2]) {
+            return true
+        }
+        if (board[0][2] == board[1][1] && board[0][2] == board[2][0]) {
+            return true
+        }
+        return false
+    }
+
+
+    private fun updateBoardForCPUMove(i: Int, j: Int) {
+        board[i][j] = 2 // 2 - CPU belgisi
+        val cellId = "$i$j"
+        val cellView = binding.root.findViewWithTag<ShapeableImageView>(cellId)
+        cellView.setImageResource(cpuSymbol)
+        togglePlayerTurn()
+        checkGameFinished()
+    }
+
+    private fun checkGameFinishedWithCPU() {
+        if (isDraw()) {
+            showResult(0)
+        } else {
+            showResult(2)
+            // Qo'yingan bo'lsa, showResult(2) chaqirish
+            // Qo'yingan bo'lmasa, setFocus() chaqirish
+        }
+    }
+
+    private fun togglePlayerTurn() {
+        isPlayerTurn = !isPlayerTurn
+        if (isPlayerTurn) {
+            binding.playerTurn.visibility = View.VISIBLE
+            binding.opponetTurn.visibility = View.INVISIBLE
+        } else {
+            binding.playerTurn.visibility = View.INVISIBLE
+            binding.opponetTurn.visibility = View.VISIBLE
+        }
+    }
+
+    private fun resetGameForCPU() {
+        // O'yinni tiklash uchun barcha o'zgarishlarni boshqarish
+        playerScoreCount = 0
+        opponentScoreCount = 0
+        binding.playerScore.text = "0"
+        binding.opponentScore.text = "0"
+        resetGame()
     }
 }

@@ -55,6 +55,7 @@ class Home : BaseFragment(R.layout.fragment_home) {
 
         cpu.setOnClickListener {
             sharedPref.withCPU = true
+            sharedPref.opponent = "CPU"
             findNavController().navigate(R.id.action_home_to_game)
         }
 
